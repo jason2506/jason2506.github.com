@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Infinite Loop]]></title>
+  <link href="http://jason2506.github.com/atom.xml" rel="self"/>
+  <link href="http://jason2506.github.com/"/>
+  <updated>2012-05-13T00:21:04+08:00</updated>
+  <id>http://jason2506.github.com/</id>
+  <author>
+    <name><![CDATA[Chi-En Wu]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+</feed>
