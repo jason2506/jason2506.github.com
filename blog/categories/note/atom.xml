@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Infinite Loop]]></title>
-  <link href="http://jason2506.github.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Note | Infinite Loop]]></title>
+  <link href="http://jason2506.github.com/blog/categories/note/atom.xml" rel="self"/>
   <link href="http://jason2506.github.com/"/>
   <updated>2012-05-14T16:51:45+08:00</updated>
   <id>http://jason2506.github.com/</id>
@@ -18,7 +18,7 @@
     <link href="http://jason2506.github.com/blog/2012/05/14/setup-a-git-server-on-windows/"/>
     <updated>2012-05-14T16:18:00+08:00</updated>
     <id>http://jason2506.github.com/blog/2012/05/14/setup-a-git-server-on-windows</id>
-    <content type="html"><![CDATA[<p><img src="http://jason2506.github.com/images/2012-05-14-setup-a-git-server-on-windows/gitolite.jpg" alt="Gitolite - 圖片來源：http://rapapa.net/?tag=gitolite" /></p>
+    <content type="html"><![CDATA[<p><img src="/images/2012-05-14-setup-a-git-server-on-windows/gitolite.jpg" alt="Gitolite - 圖片來源：http://rapapa.net/?tag=gitolite" /></p>
 
 <p>這其實是大約半個月前的事情，由於工作需要，必須建立一個藏在內部網路的 git server，來統一控管散落在世界各地的<del>龍珠</del>程式碼。雖然我個人是希望能夠架在 FreeBSD 或是 Linux 上面，不過到最後也只要到一台 Windows 的機器來用，也只好將就著先拿來架啦。為了防止之後還需要架一台 server 的時候把安裝方法忘得一乾二淨，就趁現在還殘留著一點點記憶的時候記錄起來。</p>
 
@@ -103,57 +103,56 @@
 
 <p>另外，想要新增/修改/刪除 repo 的話，則需要修改 <code>conf/gitolite.conf</code> 這個檔案：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>repo gitolite-admin
-</span><span class='line'>    RW+         =   admin
-</span><span class='line'>
-</span><span class='line'>repo testing
-</span><span class='line'>    RW+         =   @all</span></code></pre></td></tr></table></div></figure>
+<p>```
+repo gitolite-admin</p>
 
+<pre><code>RW+         =   admin
+</code></pre>
+
+<p>repo testing</p>
+
+<pre><code>RW+         =   @all
+</code></pre>
+
+<p>```</p>
 
 <p>其實意義都不會很難猜：<code>repo [reponame]</code> 就代表一個 repo。想建立一個新的 repo，就直接照著新增上去：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>repo my-repo
-</span><span class='line'>    RW+         =   admin</span></code></pre></td></tr></table></div></figure>
+<p>```
+repo my-repo</p>
 
+<pre><code>RW+         =   admin
+</code></pre>
+
+<p>```</p>
 
 <p><code>RW+</code> 為存取權限，也可以在後面限定 branch 名稱。要新增可存取的使用者，就在 <code>=</code> 後面以空白隔開：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>repo my-repo
-</span><span class='line'>    RW+         =   admin jane
-</span><span class='line'>    RW+ master  =   mary
-</span><span class='line'>    RW+ dev     =   jason
-</span><span class='line'>    R           =   tony</span></code></pre></td></tr></table></div></figure>
+<p>```
+repo my-repo</p>
 
+<pre><code>RW+         =   admin jane
+RW+ master  =   mary
+RW+ dev     =   jason
+R           =   tony
+</code></pre>
+
+<p>```</p>
 
 <p>也可以建立使用者群組：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@manager        =   jane johnson
-</span><span class='line'>
-</span><span class='line'>repo my-repo
-</span><span class='line'>    RW+         =   admin @manager
-</span><span class='line'>    RW+ master  =   mary
-</span><span class='line'>    RW+ dev     =   jason
-</span><span class='line'>    R           =   tony</span></code></pre></td></tr></table></div></figure>
+<p>```
+@manager        =   jane johnson</p>
 
+<p>repo my-repo</p>
+
+<pre><code>RW+         =   admin @manager
+RW+ master  =   mary
+RW+ dev     =   jason
+R           =   tony
+</code></pre>
+
+<p>```</p>
 
 <p>在這邊做的任何修改，只要 push 上去就會立刻生效了。</p>
 
@@ -171,26 +170,6 @@
 <li><a href="http://www.360doc.com/content/10/0111/15/146562_13261391.shtml">使用 SSH 实现 Linux 下的安全数据传输</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[第一篇測試]]></title>
-    <link href="http://jason2506.github.com/blog/2012/05/13/my-first-post/"/>
-    <updated>2012-05-13T00:36:00+08:00</updated>
-    <id>http://jason2506.github.com/blog/2012/05/13/my-first-post</id>
-    <content type="html"><![CDATA[<p><img src="http://jason2506.github.com/images/2012-05-13-my-first-post/writing.jpg" alt="Writing - 圖片來源：http://www.morguefile.com/archive/display/760506" /></p>
-
-<p>之前一直很執著要自己架一個 blog 來用，結果到後來就很懶得自己寫。後來發現 <a href="http://jekyllrb.com/">Jekyll</a> 這套靜態網頁產生工具，再加上 Github Page 有支援，就想著退而求其次改用這個也行。但是即使如此，要做出一個完整的網站依舊有點耗時，再加上 Github Page 大概是為了安全性因素，不支援 Jekyll 的 plugin，使得許多功能都得先手動產生靜態網頁，再 push 到 Github 才行，實在有點麻煩。</p>
-
-<!-- more -->
-
-
-<p>直到最近終於想開願意用 <a href="http://octopress.org/">Octopress</a> 這套 blogging framework 來寫點東西。但是又不願意用 <a href="http://octopress.org/">Octopress</a> 那套大家都一樣的版面，想自己做一個又遲遲沒有動手（萬惡的惰性Orz）。當前就只好先套 <a href="http://zespia.tw/Octopress-Theme-Slash/">Slash</a> 這個看起來還不錯的版型，等待未來的某一天我真的把版面做好吧&#8230;&#8230;希望那一天真的存在XD。</p>
-
-<p>總而言之，就是個明明只是件小事卻迂迴老半天，繞了一大圈最後又回到原點的心路歷程XD。</p>
-
-<p>至於舊文章會不會轉過來，以及舊網誌會不會整個關掉等等問題，目前都還沒決定，總之就順其自然吧。</p>
 ]]></content>
   </entry>
   
